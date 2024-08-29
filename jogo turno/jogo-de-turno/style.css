@@ -1,0 +1,47 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+html , body {
+  background-color: black;
+  color: white;
+}
+.titulo{
+  font-size: 30px;
+  font-family: comic sans ms;
+}
+
+
+  
+#butao {
+  width: 250px;
+  height: 100px;
+  margin: 10px;
+  background: linear-gradient(to right, #d10000, black);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: jetbrains mono;
+  font-size: 35px;
+}
+#butao1 {
+  width: 250px;
+  height: 100px;
+  margin: 10px;
+  background: linear-gradient(to right, #d10000, black);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: jetbrains mono;
+  font-size: 35px;
+}
+
+
+  
+.telaPrincipal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}

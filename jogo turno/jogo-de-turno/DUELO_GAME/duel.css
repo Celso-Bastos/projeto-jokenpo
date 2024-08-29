@@ -1,0 +1,147 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body , html {
+  background-color: black;
+  color: white;
+  
+  
+}
+.telaPrincipal {
+  display: flex;
+  
+  
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+
+
+  height: fit-content;
+}
+/*.textoTitulo, textoInferior {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+*/
+.jogador1, jogador2 {
+  width: -webkit-max-content;
+  
+
+}
+#textoSuperior{
+  font-size: 60px;
+  text-align: center;
+}
+.jogadorInterno{
+  width: fit-content;
+  text-align: center;
+  
+  font-size: 55px;
+  
+}
+
+.inputJogador{
+  width: 400px;
+  height: 100px;
+  
+  font-size: 60px;
+  text-align: center;
+  border-radius: 30px;
+}
+.textoInferior {
+  font-size: 50px;
+
+  
+}
+.jogadorBlock{
+  display: flex;
+  align-items: center;
+  
+  margin-top: 50px;
+  margin-bottom: 50px;
+  
+  
+  justify-content: space-around;
+  flex-direction: row;
+}
+/* efeito digitando no css*/
+.textoDigitado {
+  font-family: monospace;
+  text-align: center;
+  font-size: 30px;
+  white-space: pre-line;
+  overflow: hidden;
+  border-right: 2px solid #ffffff;
+  padding: 5px;
+  margin: 20px;
+  animation: blink-caret 0.75s step-end infinite;
+}
+
+@keyframes blink-caret {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: white;
+  }
+}
+
+
+/* Adiciona uma classe para esconder o formulário inicialmente e define a transição */
+.efeitoAparecimento {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.escondido {
+  display: none;
+}
+
+.aparecendo {
+  opacity: 1;
+  transform: translateY(0);
+}
+.textoDigitadoAbaixo {
+  font-family: monospace;
+  text-align: center;
+  font-size: 30px;
+  white-space: pre-line;
+  overflow: hidden;
+  border-right: 2px solid #ffffff;
+  padding: 5px;
+  margin: 20px;
+  animation: blink-caret 0.75s step-end infinite;
+}
+.botaoPronto-block{
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  
+}
+.botaoPronto{
+  width: 200px;
+  height: 100px;
+  background: linear-gradient(to right, #d10000, black);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: jetbrains mono;
+  font-size: 55px;
+  transition: box-shadow 0.3s ease;
+}
+
+.botaoPronto:hover{
+   box-shadow: 4px 4px 6px rgb(54, 54, 54, 0.4);
+}
