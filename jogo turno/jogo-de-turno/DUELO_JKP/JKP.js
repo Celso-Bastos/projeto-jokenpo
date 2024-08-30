@@ -24,5 +24,10 @@
 
   let nomeJogador2 = document.getElementById("nomejogador2")
   nomeJogador2.innerText = jogador2Nome
+  //mapeando as teclas do teclado
+    
 
-  // 
+
+  // adicionando as imagens ao js
+  let imagemDinamica1 = document.getElementById('iamgemDinamica1')
+  let imagemDinamica2 = document.getElementById('iamgemDinamica2')
