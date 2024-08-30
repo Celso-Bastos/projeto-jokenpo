@@ -24,3 +24,5 @@
 
   let nomeJogador2 = document.getElementById("nomejogador2")
   nomeJogador2.innerText = jogador2Nome
+
+  // 

@@ -67,7 +67,7 @@ function nomeJogadores(ev) {
 
 
   // Mostra a nova página e esconde a página atual
-  window.location.href = "/DUELO_JKP/JKP.html";
+  window.location.href = "../DUELO_JKP/JKP.html";
   
 }
 
