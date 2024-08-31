@@ -25,9 +25,24 @@
   let nomeJogador2 = document.getElementById("nomejogador2")
   nomeJogador2.innerText = jogador2Nome
   //mapeando as teclas do teclado
-    
+  document.addEventListener('DOMContentLoaded', function() {
+     // adicionando as imagens ao js
+    const imagemDinamica1 = document.getElementById('imagemDinamica1'); // Certifique-se de que o ID está correto
+    const imagemDinamica2 = document.getElementById('iamgemDinamica2')
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'w') {
+        alert('Tesoura');
+        imagemDinamica1.src = "../DUELO_JKP/IMAGENS_JKP/tesourareal.png";
+      } else if (e.key === 'a') {
+        alert('Papel');
+        imagemDinamica1.src = "../DUELO_JKP/IMAGENS_JKP/papelreal.png";
+      } else if (e.key === 'd') {
+        alert('pedra');
+        imagemDinamica1.src = "../DUELO_JKP/IMAGENS_JKP/pedrareal.png";
+      }
+    });
+  });
+  
 
-
-  // adicionando as imagens ao js
-  let imagemDinamica1 = document.getElementById('iamgemDinamica1')
-  let imagemDinamica2 = document.getElementById('iamgemDinamica2')
+ 
+  
