@@ -31,7 +31,7 @@
     const imagemDinamica2 = document.getElementById('iamgemDinamica2')
     document.addEventListener('keydown', function(e) {
       if (e.key === 'w') {
-        alert('Tesoura');
+        alert('Teesoura');
         imagemDinamica1.src = "../DUELO_JKP/IMAGENS_JKP/tesourareal.png";
       } else if (e.key === 'a') {
         alert('Papel');
@@ -39,6 +39,21 @@
       } else if (e.key === 'd') {
         alert('pedra');
         imagemDinamica1.src = "../DUELO_JKP/IMAGENS_JKP/pedrareal.png";
+      }
+      if (e.key === 'w') {
+        alert('Teesoura');
+        imagemDinamica1.src = "../DUELO_JKP/IMAGENS_JKP/tesourareal.png";
+      } else if (e.key === 'a') {
+        alert('Papel');
+        imagemDinamica1.src = "../DUELO_JKP/IMAGENS_JKP/papelreal.png";
+      } else if (e.key === 'd') {
+        alert('pedra');
+        imagemDinamica1.src = "../DUELO_JKP/IMAGENS_JKP/pedrareal.png";
+      }
+      else if (e.key === " "){
+        alert("este")
+
+        
       }
     });
   });
