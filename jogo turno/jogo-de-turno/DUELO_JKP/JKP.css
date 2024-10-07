@@ -69,7 +69,7 @@ html {
     justify-content: center;
   }
   .blocoElementos {
-    height: 300px;
+    
     width: 300px;
     background-color: #222222;
     padding: 20px;
@@ -81,5 +81,16 @@ html {
   }
   .item {
     padding: 10px;
+  }
+
+  #hpPlayer1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center; 
+    background-color: #00ff4c;
+    width: 300px;
+    height: 30px;
+    border-radius: 4px  ;
   }
   
