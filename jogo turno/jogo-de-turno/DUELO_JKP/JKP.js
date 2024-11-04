@@ -62,10 +62,15 @@
             alert(`Jogador 1 escolheu: ${jogadaP1}, Jogador 2 escolheu: ${jogadaP2}`);
             
             // Aqui você pode adicionar a lógica para comparar as jogadas e decidir o vencedor
-            
-            jogadaP1 = null;
-            jogadaP2 = null;
+            //jogadaP1 = null;
+            //jogadaP2 = null;
           }
+        }
+
+        if (jogadaP1 === jogadap2) {
+          vidaP1 += -1
+          vidaP2 += -1
+          alert('tomaram dano')
         }
 
         document.addEventListener('keydown', function(e) {
