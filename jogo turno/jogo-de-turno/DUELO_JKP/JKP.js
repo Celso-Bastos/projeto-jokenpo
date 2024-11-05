@@ -64,6 +64,7 @@
             // Aqui você pode adicionar a lógica para comparar as jogadas e decidir o vencedor
             jogadaP1 = null;
             jogadaP2 = null;
+          
           }
         }
 
