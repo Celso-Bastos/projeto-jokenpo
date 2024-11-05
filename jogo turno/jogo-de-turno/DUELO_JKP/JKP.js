@@ -61,7 +61,7 @@
           if (jogadaP1 && jogadaP2) {
             alert(`Jogador 1 escolheu: ${jogadaP1}, Jogador 2 escolheu: ${jogadaP2}`);
             
-            // Aqui você pode adicionar a lógica para comparar as jogadas e decidir o vencedor
+            // Aqui você pode Adicionar a lógica para comparar as jogadas e decidir o vencedor
             jogadaP1 = null;
             jogadaP2 = null;
           
