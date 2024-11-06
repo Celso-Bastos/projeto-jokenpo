@@ -104,5 +104,11 @@ html {
     height: 30px;
     border-radius: 4px  ;
   }
+  .grupoAvisos{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+  }
   
   
