@@ -1,9 +1,9 @@
 // funçao que possibilita o boao redirecionar a pessoa para a outra pagina
 document.getElementById("butao").addEventListener("click", function() {
-  window.location.href = "DUELO_GAME/duel.html";
+  window.location.href = "../DUELO_GAME/duel.html";
 });
 document.getElementById("butao1").addEventListener("click", function() {
-  window.location.href = "DUELO_AJUDA/ajuda.html";
+  window.location.href = "../DUELO_AJUDA/ajuda.html";
 });
 //quando o mouse passar por cima do botao ele muda de cor
 document.getElementById("butao").addEventListener("mouseenter", function() {
