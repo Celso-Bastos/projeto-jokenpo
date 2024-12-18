@@ -104,7 +104,7 @@ html {
     height: 30px;
     border-radius: 4px  ;
   }
-  .grupoAvisos{
+  #grupoAvisos{
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -112,5 +112,8 @@ html {
     margin-top: 20px;
     margin-bottom: 0px;
   }
-  
+  #contagem{
+    display: flex;
+    align-items: center;
+  }
   
