@@ -1,6 +1,3 @@
-
-const socket = io();
-
 // Elementos do HTML
 const resultadoDiv = document.getElementById('avisos');
 const vidaP1Element = document.getElementById('hpPlayer1');
@@ -10,132 +7,189 @@ const imagemJogada1 = document.getElementById('imagemDinamica1');
 const imagemJogada2 = document.getElementById('imagemDinamica2');
 const avisoElement = document.getElementById('avisos');
 
-document.addEventListener('DOMContentLoaded', function () {
-  // Recupera os nomes do localStorage
-  const jogador1 = localStorage.getItem('jogador1') ;
-  const jogador2 = localStorage.getItem('jogador2') ;
-  
-  
+// Variáveis globais
+let vidas = { player1: 10, player2: 10 };
+let jogadores = {}; // Armazena as jogadas de cada jogador
+let nomes = { player1: '', player2: '' };
 
-  // Certifique-se de que os elementos existem antes de manipulá-los
+let contadorAtivo = false; // Controla se a contador esta ativo
+let selecaoAtiva = 0
+
+avisoElement.innerHTML = 'fim da contagem tem 1 segundo para escolher'
+// Recupera os nomes do localStorage
+document.addEventListener('DOMContentLoaded', function () {
+  const jogador1 = localStorage.getItem('jogador1');
+  const jogador2 = localStorage.getItem('jogador2');
+
+  nomes.player1 = jogador1 || 'Jogador 1';
+  nomes.player2 = jogador2 || 'Jogador 2';
+
+  // Exibe os nomes no HTML
   const nomeJogador1 = document.getElementById('nomejogador1');
   const nomeJogador2 = document.getElementById('nomejogador2');
 
-
-  if (nomeJogador1) {
-    nomeJogador1.innerText = jogador1; // Ou .textContent, dependendo do elemento
-  } else {
-    console.error("Elemento 'nomeJogador1' não encontrado.");
-  }
-
-  if (nomeJogador2) {
-    nomeJogador2.innerText = jogador2;
-  } else {
-    console.error("Elemento 'nomeJogador2' não encontrado.");
-  }
-  // Envia os nomes para o servidor ao conectar
-  const socket = io();
-  socket.emit('nomesJogadores', { jogador1, jogador2 });
+  if (nomeJogador1) nomeJogador1.innerText = nomes.player1;
+  if (nomeJogador2) nomeJogador2.innerText = nomes.player2;
 });
 
+
+// Função para iniciar o contador
+function iniciarRodadaContador() {
+  contadorAtivo = true;
+  let tempoRestante = 3; // Tempo do contador em segundos
+  contagemElement.innerText = tempoRestante;
+
+  const intervalo = setInterval(() => {
+    tempoRestante--;
+    if (tempoRestante > 0) {
+      contagemElement.innerText = tempoRestante;
+    } else {
+      clearInterval(intervalo);
+      contagemElement.innerText = 'Vai!';
+      contadorAtivo = false; // Contador finalizado
+      tempoSelecao()
+    }
+  }, 1000);
+}
+// funçao do tempo de seleçao
+function tempoSelecao(){
+    selecaoAtiva = 1;
+
+    let restanteTempo = 1; // tempo contador de seleçao
+    contagemElement.innerText = "selecione"
+    const interv = setInterval(()=>{
+      restanteTempo--;
+      if(restanteTempo > 0){
+        contagemElement.innerText = restanteTempo;
+      }else{
+        clearInterval(interv)
+        
+         // Avaliação final ao término do tempo de seleção
+      if (!jogadores.player1) {
+        jogadores.player1 = "Nenhuma"; // Jogador 1 não jogou
+      }
+      if (!jogadores.player2) {
+        jogadores.player2 = "Nenhuma"; // Jogador 2 não jogou
+      }
+      
+      verificarResultado(); // Avalia o resultado considerando jogadas e ausências
+      selecaoAtiva = 2; // Desativa seleção
+      jogadores = {}; // Reinicia jogadas
+      iniciarRodadaContador(); // Prepara próxima rodada
+      } 
+    },1000)
+}
+
+// funçao para iniciar o contador do tempo para jogar
+
+iniciarRodadaContador()
 // Função para enviar a jogada do jogador
 function enviarJogada(jogada, jogador) {
-  socket.emit('jogada', { jogada: jogada });
+  if (contadorAtivo && selecaoAtiva !== 1) {
+   
+    return;
+  }
+  
 
-  if(jogador ===1){
-      // Atualizar a imagem da jogada do jogador
-      if (jogada === 'Pedra') {
-        console.log("teste")
-        imagemJogada1.src = "../DUELO_JKP/IMAGENS_JKP/pedrareal.png";
-      } else if (jogada === 'Papel') {
-        imagemJogada1.src = "../DUELO_JKP/IMAGENS_JKP/papelreal.png";
-      } else if (jogada === 'Tesoura') {
-        imagemJogada1.src = "../DUELO_JKP/IMAGENS_JKP/tesourareal.png";
-      }
-  } 
-  if(jogador === 2){
-    // Atualizar a imagem da jogada do jogador
-    if (jogada === 'Pedra') {
-      imagemJogada2.src = "../DUELO_JKP/IMAGENS_JKP/pedrareal.png";
-    } else if (jogada === 'Papel') {
-      imagemJogada2.src = "../DUELO_JKP/IMAGENS_JKP/papelreal.png";
-    } else if (jogada === 'Tesoura') {
-      imagemJogada2.src = "../DUELO_JKP/IMAGENS_JKP/tesourareal.png";
-    }
-} 
+  if (jogadores[jogador]) return; // Apenas a primeira jogada será contabilizada
+
+  if (jogador === 1) {
+    jogadores.player1 = jogada;
+    atualizarImagemJogada(jogada, 1);
+  } else if (jogador === 2) {
+    jogadores.player2 = jogada;
+    atualizarImagemJogada(jogada, 2);
+  }
+
 
 }
-// Captura os eventos de teclado
-document.addEventListener("keydown", function (ev) {
-  const key = ev.key.toLocaleLowerCase();
-  console.log(`Tecla pressionada: ${ev.key}`);
 
-  // Jogador 1: W, A, D
-  if (key === "w") {
-    console.log("teste")
-    enviarJogada("Pedra", 1);
-  } else if (key === "a") {
-    enviarJogada("Papel", 1);
-  } else if (key === "d") {
-    enviarJogada("Tesoura", 1);
+// Atualiza a imagem da jogada do jogador
+function atualizarImagemJogada(jogada, jogador) {
+  const imagem = jogador === 1 ? imagemJogada1 : imagemJogada2;
+
+  if (jogada === 'Pedra') {
+    imagem.src = "../DUELO_JKP/IMAGENS_JKP/pedrareal.png";
+  } else if (jogada === 'Papel') {
+    imagem.src = "../DUELO_JKP/IMAGENS_JKP/papelreal.png";
+  } else if (jogada === 'Tesoura') {
+    imagem.src = "../DUELO_JKP/IMAGENS_JKP/tesourareal.png";
+  }
+}
+
+// Função para verificar o resultado da rodada
+function verificarResultado() {
+  const jogadaP1 = jogadores.player1;
+  const jogadaP2 = jogadores.player2;
+  let resultado = '';
+
+  // Comparação das jogadas
+
+  if (jogadaP1 === jogadaP2 ) {
+    resultado = 'Empate';
+    vidas.player1--;
+    vidas.player2--;
+    
+  } else if ((jogadaP1 === 'Pedra' && jogadaP2 === 'Tesoura') ||
+  (jogadaP1 === 'Tesoura' && jogadaP2 === 'Papel') ||
+  (jogadaP1 === 'Papel' && jogadaP2 === 'Pedra') ||
+  (jogadaP2 === "Nenhuma") 
+  
+) {
+    resultado = `${nomes.player1} venceu`;
+    vidas.player2 -= 2;
+  } else {
+    resultado = `${nomes.player2} venceu`;
+    vidas.player1 -= 2;
   }
 
-  // Jogador 2: I, J, L
-  if (key === "i") {
-    enviarJogada("Pedra", 2);
-  } else if (key === "j") {
-    enviarJogada("Papel", 2);
-  } else if (key === "l") {
-    enviarJogada("Tesoura", 2);
-  }
-});
-socket.on('',(data)=>{
+  // Exibir o resultado
+  resultadoDiv.innerHTML = `${resultado} <br> Jogada 1: ${jogadaP1} <br> Jogada 2: ${jogadaP2}`;
 
-})
-
-// Função para exibir os resultados
-socket.on('resultado', (data) => {
-  console.log(data)
-  // Exibir o resultado da rodada
-  resultadoDiv.innerHTML = `${data.resultado} <br> Jogada 1: ${data.jogadaP1} <br> Jogada 2: ${data.jogadaP2}`;
- 
   // Atualizar as vidas dos jogadores
-  vidaP1Element.style.width = `${data.vidaP1 * 10}%`;
-  vidaP2Element.style.width = `${data.vidaP2 * 10}%`;
+  vidaP1Element.style.width = `${vidas.player1 * 10}%`;
+  vidaP2Element.style.width = `${vidas.player2 * 10}%`;
 
-     // Exibir o valor da vida dentro das barras
-     vidaP1Element.textContent = data.vidaP1; // Adiciona o valor da vida do player 1
-     vidaP2Element.textContent = data.vidaP2; // Adiciona o valor da vida do player 2
-
-  // Atualizar as imagens das jogadas
-  if (data.jogadaP1 === 'Pedra') {
-    imagemJogada1.src = "../DUELO_JKP/IMAGENS_JKP/pedra.png";
-  } else if (data.jogadaP1 === 'Papel') {
-    imagemJogada1.src = "../DUELO_JKP/IMAGENS_JKP/papel.png";
-  } else if (data.jogadaP1 === 'Tesoura') {
-    imagemJogada1.src = "../DUELO_JKP/IMAGENS_JKP/tesoura.png";
-  }
-
-  if (data.jogadaP2 === 'Pedra') {
-    imagemJogada2.src = "../DUELO_JKP/IMAGENS_JKP/pedra.png";
-  } else if (data.jogadaP2 === 'Papel') {
-    imagemJogada2.src = "../DUELO_JKP/IMAGENS_JKP/papel.png";
-  } else if (data.jogadaP2 === 'Tesoura') {
-    imagemJogada2.src = "../DUELO_JKP/IMAGENS_JKP/tesoura.png";
-  }
+  // Exibir o valor da vida dentro das barras
+  vidaP1Element.textContent = vidas.player1;
+  vidaP2Element.textContent = vidas.player2;
 
   // Se algum jogador perdeu, reiniciar a partida
-  if (data.vidaP1 <= 0 || data.vidaP2 <= 0) {
+  if (vidas.player1 <= 0 || vidas.player2 <= 0) {
     avisoElement.innerHTML = 'A partida foi reiniciada! Ambos os jogadores voltaram à vida inicial (10).';
+    setTimeout(reiniciarPartida, 3000); // Reinicia após 3 segundos
   }
-});
 
-// Função para exibir a contagem regressiva
-socket.on('contagem', (data) => {
-  contagemElement.textContent = `Contagem: ${data.contagem}`;
-});
+  // Reiniciar jogadas para a próxima rodada
+  jogadores = {};
+}
 
-// Função para exibir mensagens do servidor (avisos)
-socket.on('avisos', (data) => {
-  avisoElement.innerHTML = data.mensagem;
+// Função para reiniciar a partida
+function reiniciarPartida() {
+  vidas = { player1: 10, player2: 10 }; // Reinicia as vidas
+  resultadoDiv.innerHTML = ''; // Limpa o resultado
+  vidaP1Element.style.width = '100%';
+  vidaP2Element.style.width = '100%';
+  vidaP1Element.textContent = vidas.player1;
+  vidaP2Element.textContent = vidas.player2;
+  avisoElement.innerHTML = ''; // Limpa o aviso
+}
+
+// Captura os eventos de teclado
+document.addEventListener("keydown", function (ev) {
+  const key = ev.key.toLowerCase();
+  console.log(`Tecla pressionada: ${ev.key}` + jogadores.player1 + jogadores.player2);
+
+  // Iniciar contagem (tecla M)
+  if (key === 'm') iniciarRodadaContador();
+
+  // Jogador 1: W, A, D
+  if (key === "w") enviarJogada("Pedra", 1);
+  else if (key === "a") enviarJogada("Papel", 1);
+  else if (key === "d") enviarJogada("Tesoura", 1);
+
+  // Jogador 2: I, J, L
+  if (key === "i") enviarJogada("Pedra", 2);
+  else if (key === "j") enviarJogada("Papel", 2);
+  else if (key === "l") enviarJogada("Tesoura", 2);
 });
