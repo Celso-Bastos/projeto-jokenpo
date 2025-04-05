@@ -179,6 +179,9 @@ function enviarJogada(jogada, jogador) {
 
 }
 
+
+
+
 // Atualiza a imagem da jogada do jogador
 function atualizarImagemJogada(jogada, jogador) {
   const imagem = jogador === 1 ? imagemJogada1 : imagemJogada2;

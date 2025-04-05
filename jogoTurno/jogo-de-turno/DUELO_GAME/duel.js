@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function () {
   // Inicia o processo de digitação do primeiro texto
   escreverTexto(document.getElementsByClassName('textoDigitado')[0]);
@@ -70,10 +71,6 @@ function nomeJogadores(ev) {
   window.location.href = "../DUELO_JKP/JKP.html";
   
 }
-
-
-
-
 // removido funcao devoltar para a tela inicial
 
 // Adiciona o event listener ao botão após garantir que o DOM está completamente carregado
@@ -85,4 +82,3 @@ document.addEventListener('DOMContentLoaded', function () {
     console.error("Elemento com ID 'botaop' não encontrado.");
   }
 });
-
