@@ -27,7 +27,7 @@ let buffAtivos = {
 let contadorAtivo = false; // Controla se a contador esta ativo
 let selecaoAtiva = 0
 
-//irei adicionar as bençaos e as maldiçoes
+//bençaos e as maldiçoes
 let bençaos = [
   {
     nome: "Força",
@@ -92,8 +92,9 @@ function iniciarRodadaContador() {
   contadorAtivo = true;
   let tempoRestante = 3; // Tempo do contador em segundos
   contagemElement.innerText = tempoRestante;
-
+  //aqui é o contador intervalado onde o tempo vai ir diminuindo
   const intervalo = setInterval(() => {
+    //tempo restante vai diminuindo ate ate o zero 
     tempoRestante--;
     if (tempoRestante > 0) {
       contagemElement.innerText = tempoRestante;
@@ -137,12 +138,13 @@ function tempoSelecao(){
 // funçao para iniciar o contador do tempo para jogar
 
 iniciarRodadaContador()
-
-function mostrarSeleçaobençao(jogador){
+//apagar dps
+//function mostrarSeleçaobençao(jogador){
+  //pego os elementos que mostrarao a bencao
   const div = document.getElementById("selecaoBencao");
   const titulo = document.getElementById('tituloBencao');
   const opcoes = document.getElementById('opcoesBencao');
-
+  //organizo a mostr
   div.style.display="block";
   titulo.innerHTML = `${nomes[`player${jogador}`]}, escolha sua bênção:`;
   opcoes.innerHTML = '';
@@ -206,7 +208,7 @@ function verificarResultado() {
   // Sortear bênçãos automaticamente para a rodada
   bencaos_jogadas.player1 = sortearBencaoAleatoria();
   bencaos_jogadas.player2 = sortearBencaoAleatoria();
-
+  // sao os danos que respectivos jogadores irao receber
   let danoP1 = 0;
   let danoP2 = 0;
 
@@ -215,7 +217,7 @@ function verificarResultado() {
     resultado = 'Empate';
     danoP1 = 1;
     danoP2 = 1;
-  } else if (
+  } else if ( // comparo todas as jogadas por via de otimizaçao
     (jogadaP1 === 'Pedra' && jogadaP2 === 'Tesoura') ||
     (jogadaP1 === 'Tesoura' && jogadaP2 === 'Papel') ||
     (jogadaP1 === 'Papel' && jogadaP2 === 'Pedra') ||
@@ -232,11 +234,17 @@ function verificarResultado() {
   const b1 = bencaos_jogadas.player1;
   if (b1) {
     if (
+      // utilizo o b1 case para verificar cada caso e aplicaçao de cada caso em cada bufff
+      // na primeira linha verifico se foi vitoria e se resultado tem o nome do player 1 
+      // a mesma coisa em baixo 
       (b1.case === 'vitoria' && resultado.includes(nomes.player1)) ||
       (b1.case === 'Vitoria oponente' && resultado.includes(nomes.player2)) ||
       (b1.case === 'empate' && resultado === 'Empate') ||
       (b1.case === 'empate(caso contrario debuff)')
     ) {
+
+      //aqui temos as aplicaçoes de dano mudando as variaveis
+    
       if (b1.case === 'empate(caso contrario debuff)') {
         if (resultado === 'Empate') {
           danoP2 += b1.buff || 0;
@@ -253,6 +261,7 @@ function verificarResultado() {
   // Aplicar bênção do player 2
   const b2 = bencaos_jogadas.player2;
   if (b2) {
+
     if (
       (b2.case === 'vitoria' && resultado.includes(nomes.player2)) ||
       (b2.case === 'Vitoria oponente' && resultado.includes(nomes.player1)) ||
@@ -326,6 +335,7 @@ function reiniciarPartida() {
 }
 
 function sortearBencaoAleatoria(){
+
   const index = Math.floor(Math.random() * bençaos.length)
   return bençaos[index]
 }
