@@ -311,38 +311,6 @@ function registrarRodada(jogador, escolha){
 
 }
 
-function aplicarBencao(jogador, resultado, danoAlvo,danoProprio) {
-  const bencao = bencaos_jogadas[jogador];
-  const nomeJogador = nomes[jogador];
-  const nomeOponente = jogador === 'player1' ? nomes.player2 : nomes.player1;
-
-  if(!bencao) return {danoAlvo,danoProprio};
-
-  const venceu = resultado.includes(nomeJogador)
-  const perdeu = resultado.includes(nomeOponente)
-  const empate = resultado  === "Empate"
-
-  if (
-    (bencao.case === 'vitoria' && venceu) ||
-    (bencao.case === 'Vitoria oponente' && perdeu) ||
-    (bencao.case === 'empate' && empate) ||
-    (bencao.case === 'empate(caso contrario debuff)')
-  ) {
-    if (bencao.case === 'empate(caso contrario debuff)') {
-      if (empate) {
-        danoAlvo += bencao.buff || 0;
-      } else {
-        danoProprio += bencao.debuff || 0;
-      }
-    } else {
-      danoAlvo += bencao.buff || 0;
-      danoProprio -= bencao.debuff || 0;
-    }
-  }
-
-  return { danoAlvo, danoProprio };
-  
-}
 
 
 
@@ -362,130 +330,10 @@ function sortearBencaoAleatoria(){
   return bençaos[index]
 }
 
-function aplicarEfeitosBencao(){
-  const b1 = bencaos_jogadas.player1
-  const b2 = bencaos_jogadas.player2
 
-  //p1
-  if(b1.buff) vidas.player1 += b1.buff
-  if(b1.debuff) vidas.player1 += b1.debuff
 
-  //p2
 
-  if(b2.buff) vidas.player2 += b2.buff
-  if(b2.debuff) vidas.player2 += b2.debuff
 
-    // Atualizar vidas na tela
-    vidaP1Element.style.width = `${vidas.player1 * 10}%`;
-    vidaP2Element.style.width = `${vidas.player2 * 10}%`;
-    vidaP1Element.textContent = vidas.player1;
-    vidaP2Element.textContent = vidas.player2;
-
-    selecaoDeBencaos = false; // resetar após aplicar
-    // Resetar para próxima rodada
-    bencaos_jogadas = {};
-    iniciarRodadaContador();
-}
-
-function iniciarSelecaoBencaos() {
-  selecaoDeBencaos = true;
-  bencaos_jogadas = {};
-
-  avisoElement.innerHTML += "<br>Escolham suas bênçãos! (1/2/3 para P1 — 7/8/9 para P2)";
-}
-
-/*function escolhaBencao(jogador, indiceEscolhido) {
-  // Verifica se o jogador já escolheu
-  if (bencaos_jogadas[`player${jogador}`]) return;
-
-   // Pega a bênção sorteada naquele índice
-   const bencao = bencaosSorteadas[indiceEscolhido];
-   bencaos_jogadas[`player${jogador}`] = bencao;
- 
-   // Feedback visual
-   avisoElement.innerHTML += `<br>${nomes[`player${jogador}`]} escolheu: ${bencao.nome}`;
- 
-   // Quando os dois escolherem, aplicar efeitos
-   if (bencaos_jogadas.player1 && bencaos_jogadas.player2) {
-     aplicarEfeitosBencao();
-   }
-  }*/
-
-/*function calcularDano(resultado,jogador){
-  let danoPlayer1 = 0
-  let danoPlayer2 = 0
-
-  const habilidade1 = habilidadesJogador1
-  const habilidade2 = habilidadesJogador2
-
-  if(resultado === "player1"){
-    danoPlayer2 = 1
-    //buffs v
-    if(habilidade1 === "Força") danoPlayer2 += 1
-    if (habilidade1 === "Escudo abençoado") danoPlayer2 -= 1
-
-    //maldicoes
-
-    if(habilidade1 === 'sacrificio'){
-      danoPlayer2 += 3
-      danoPlayer1 +=1
-
-    }
-
-    if(habilidade2 === "Escudo amaldiçoado"){
-      danoPlayer2 += 3
-      danoPlayer1 -= 1
-    }
-
-    if (resultado === 'player2') {
-      danoPlayer1 = 1;
-      // Buffs de vitória
-      if (habilidade2 === 'Força') danoPlayer1 += 1;
-      if (habilidade1 === 'Escudo abençoado') danoPlayer1 -= 1;
-  
-      // Maldições
-      if (habilidade2 === 'Sacrifício') {
-        danoPlayer1 += 3;
-        danoPlayer2 += 1;
-      }
-      if (habilidade1 === 'Escudo amaldiçoado') {
-        danoPlayer1 += 3;
-        danoPlayer2 += 1;
-      }
-    }
-
-    if (resultado === 'empate') {
-      // Buffs de empate
-      if (habilidade1 === 'Sorte') danoPlayer2 += 1;
-      if (habilidade2 === 'Sorte') danoPlayer1 += 1;
-  
-      // Maldições de empate
-      if (habilidade1 === 'Jackpot') {
-        danoPlayer2 += 4;
-      } else if (habilidade1 === 'Jackpot') {
-        danoPlayer1 += 2;
-      }
-  
-      if (habilidade2 === 'Jackpot') {
-        danoPlayer1 += 4;
-      } else if (habilidade2 === 'Jackpot') {
-        danoPlayer2 += 2;
-      }
-      
-        // Garantir que não tenha dano negativo
-  danoPlayer1 = Math.max(0, danoPlayer1);
-  danoPlayer2 = Math.max(0, danoPlayer2);
-
-  // Aplicar dano
-  vidas.player1 -= danoPlayer1;
-  vidas.player2 -= danoPlayer2;
-
-  atualizarVidas();
-    }
-  }
-  
-
- }*/
 
 // Captura os eventos de teclado
 document.addEventListener("keydown", function (ev) {
